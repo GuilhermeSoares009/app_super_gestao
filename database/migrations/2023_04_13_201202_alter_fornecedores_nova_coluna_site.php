@@ -14,7 +14,7 @@ Class AlterFornecedoresNovaColunaSite extends Migration
     public function up()
     {
         Schema::table('fornecedores', function(Blueprint $table) {
-            $table->string('site',150)->after('name')->nullable();
+            $table->string('site',150)->after('nome')->nullable();
         });
     }
 
