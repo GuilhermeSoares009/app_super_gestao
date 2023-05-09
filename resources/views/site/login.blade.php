@@ -15,6 +15,7 @@
                     <input type="password" name="senha" placeholder="Senha" value="{{old('senha')}}" class="borda-preta">
                     {{ $errors->has('senha')? $errors->first('senha') : '' }}
                     <button type="submit">Acessar</button>
+                    {{ isset($erro) ? $erro : '' }}
                 </form>
             </div>
         </div>
