@@ -18,15 +18,15 @@ class FornecedorController extends Controller
             ->where('site','like','%'.$request->input('site').'%')
             ->where('uf','like','%'.$request->input('uf').'%')
             ->where('email','like','%'.$request->input('email').'%')
-            ->get();
+            ->paginate(2);
 
-        return view('app.fornecedor.listar',['fornecedores' => $fornecedores]);
+        return view('app.fornecedor.listar',['fornecedores' => $fornecedores, 'request' => $request->all()]);
     }
 
     public function adicionar(Request $request)
     {
         $msg = '';
-        if($request->input('_token') != ''){
+        if($request->input('_token') != '' && $request->input('id') == ''){
             $regras = [
                 'nome' => 'required|min:3|max:30',
                 'site' => 'required',
@@ -49,6 +49,22 @@ class FornecedorController extends Controller
             $fornecedor->create($request->all());
             $msg = 'Registro salvo com sucesso';
         }
-        return view('app.fornecedor.adicionar', ['msg' => $msg]);
+
+        if($request->input('_token') != '' && $request->input('id') != ''){
+            $fornecedor = Fornecedor::find($request->input('id'));
+            $update = $fornecedor->update($request->all());
+
+            $msg = $update ? "Atualização realizada com sucesso.": "Erro ao atualizar.";
+
+            return redirect()->route('app.fornecedor.editar', ['id' => $request->input('id'),'msg' => $msg]);
+
+        }
+        return view('app.fornecedor.editar', ['msg' => $msg]);
+    }
+
+    public function editar($id, $msg = '')
+    {
+        $fornecedor = Fornecedor::find($id);
+        return view('app.fornecedor.adicionar', ['fornecedor' => $fornecedor, 'msg' => $msg]);
     }
 }
