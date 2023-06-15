@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Produto;
-use App\Models\Unidade;
+use App\Models\{
+    Produto,
+    Unidade
+};
 use Illuminate\Http\Request;
+
 
 class ProdutoController extends Controller
 {
