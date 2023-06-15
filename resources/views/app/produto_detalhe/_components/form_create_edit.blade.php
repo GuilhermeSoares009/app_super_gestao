@@ -1,8 +1,8 @@
 @if(isset($produto_detalhe->id))
-    <form action="{{ route('produto_detalhe.update', ['produto' => $produto_detalhe->id]) }}" method="post">
+    <form action="{{ route('produto_detalhe.update', ['produto_detalhe' => $produto_detalhe->id]) }}" method="post">
     @csrf
-@method('PUT')
-    @else
+    @method('PUT')
+@else
     <form action="{{ route('produto_detalhe.store') }}" method="post">
     @csrf
 @endif
@@ -21,7 +21,7 @@
 <select name="unidade_id" id="">
     <option value=""> -- Selecione a Unidade de Medida --</option>
     @foreach ($unidades as $unidade)
-        <option value="{{ $unidade->id }}" {{ $produto_detalhe->unidade_id ?? old('unidade_id') }}> {{ $unidade->descricao }} </option>
+        <option value="{{ $unidade->id }}" {{ $produto_detalhe->unidade_id == $unidade->id ? 'selected': '' }}> {{ $unidade->descricao }} </option>
     @endforeach
 </select>
 {{ $errors->has('unidade_id') ? $errors->first('unidade_id'): '' }}
