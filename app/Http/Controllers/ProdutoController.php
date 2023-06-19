@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\{
     Produto,
+    ProdutoDetalhe,
     Unidade
 };
 use Illuminate\Http\Request;
@@ -18,6 +19,18 @@ class ProdutoController extends Controller
     public function index(Request $request)
     {
         $produtos = Produto::paginate(10);
+        
+
+        /*foreach ($produtos as $key => $produto) {
+            $produtoDetalhe = ProdutoDetalhe::where('produto_id',$produto->id)->first();
+
+            if(isset($produtoDetalhe))
+            {
+                $produto[$key]['comprimento'] = $produtoDetalhe->comprimento;
+                $produto[$key]['largura'] = $produtoDetalhe->largura;
+                $produto[$key]['altura'] = $produtoDetalhe->altura;
+            }
+        } */
 
         return view('app.produto.index',['produtos' => $produtos, 'request' => $request->all()]);
     }
