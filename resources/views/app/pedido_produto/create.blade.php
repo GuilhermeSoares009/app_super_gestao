@@ -21,6 +21,33 @@
                 <p>Cliente: {{ $pedido->cliente_id }}</p>
 
                 <div style="width:30%; margin-left: auto; margin-right: auto;">
+                    <h4>Itens do pedido</h4>
+                    <table border="1" width="100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome do produto</th>
+                                <td>Data de inclusão do item no pedido</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pedido->produtos as $produto)
+                                <tr>
+                                    <td>{{ $produto->id }}</td>
+                                    <td>{{ $produto->nome }}</td>
+                                    <td>{{ $produto->pivot->created_at->format('d/m/Y') }}</td>
+                                    <td>
+                                        <form id="form_{{$produto->pivot->id}}" action="{{ route('pedido-produto.destroy', ['pedidoProduto' => $pedido->pivot->id,'pedido' => $pedido->id]) }}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <a href="#" onclick="document.getElementById('form_{{$produto->pivot->id}}').submit()">Excluir</a>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                     @component('app.pedido_produto._components.form_create', ['pedido' => $pedido])
                     @endcomponent
                 </div>

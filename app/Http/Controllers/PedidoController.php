@@ -26,9 +26,10 @@ class PedidoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Pedido $pedido)
     {
         $clientes = Cliente::all();
+        //$pedido->produtos;
         return view('app.pedido.create', ['clientes' => $clientes]);
     }
 
